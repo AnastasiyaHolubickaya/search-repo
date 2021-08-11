@@ -1,0 +1,16 @@
+.block{
+    width: 100%;
+    margin-top: 20px;
+}
+.block_item{
+    border: 1px solid black;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+.block_item p{
+   font-size: 12px;
+}
+.btn{
+    width: max-content;
+    margin-right: 10px;
+}

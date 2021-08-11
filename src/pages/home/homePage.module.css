@@ -1,0 +1,17 @@
+.container {
+    padding: 50px;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.container p {
+    font-size: 25px;
+    font-family: Arial;
+    color: black;
+}
+
+.btnSubmit {
+    margin-top: 20px;
+}
