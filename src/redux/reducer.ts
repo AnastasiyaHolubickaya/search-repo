@@ -1,6 +1,7 @@
 import {BaseThuncType, InferActionType} from "./store";
 import {getRepositopies} from "../api/api";
 
+
 type ActionsType = InferActionType<typeof actions>;
 type ThuncType = BaseThuncType<ActionsType>
 
@@ -17,12 +18,13 @@ export type listType = {
     }
 }
 
+
 let initialState = {
     isRequestSubmit: false,
     massRepos: [] as Array<listType>,
     firstTimeFlaf: false,
     repoId: null as null | number,
-    message: null as null | string
+    message: null as null | string,
 };
 export type initialStateType = typeof initialState;
 
@@ -59,6 +61,7 @@ const actions = {
     setFirstTimeFlaf: (flag: boolean) => ({type: "SET_FIRST_TIME_FLAG", flag} as const),
     setId: (id: number) => ({type: "SET_CLICK_ID", id} as const),
     setMessage: (mess: string) => ({type: "SET_MESSAGE", mess} as const),
+
 };
 
 export const getRepo = (name: string): ThuncType => async (dispatch: any) => {
@@ -75,5 +78,6 @@ export const setFlagApp = (flag: boolean) => (dispatch: any) => {
 export const setClickRepo = (id: number) => (dispatch: any) => {
     dispatch(actions.setId(id))
 };
+
 
 export default reducer;

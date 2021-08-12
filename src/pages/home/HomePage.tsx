@@ -19,15 +19,23 @@ type validatorType = (value: string) => string | undefined
 
 const requiredField: validatorType = (value) => {
     if (value) return undefined;
-    return "Поле обязательно к заполнению";
+    return "введите данные для поиска";
 };
+const validateSumbol: validatorType = (value) => {
+    if (value !== undefined) {
+        let regex = new RegExp(/^[a-z]+$/i);
+        if (!regex.test(value)) return (`разрешен ввод только букв латинского алфавита`);
+    }
+    return undefined;
+};
+
 
 const SearchForm: React.FC<InjectedFormProps<formDataType> & ownPropsType> = ({handleSubmit, error}) => {
     return (
         <form className={classes.loginForm} onSubmit={handleSubmit}>
             <div className={classes.loginFormInput}><Field name={'name'}
                                                            component={Input}
-                                                           validate={[requiredField]}/></div>
+                                                           validate={[requiredField, validateSumbol]}/></div>
             {
                 error && <div className={classes.formSummaryError}> {error}</div>
             }
@@ -43,6 +51,7 @@ const ReduxForm = reduxForm<formDataType, ownPropsType>({
 
 
 export const HomePage: React.FC<PropsType> = ({dataRepoz}) => {
+
     const isRequestSub = useSelector((state: AppStateType) => state.app.isRequestSubmit);
     const mess = useSelector((state: AppStateType) => state.app.message);
     const dispatch = useDispatch();
@@ -60,8 +69,11 @@ export const HomePage: React.FC<PropsType> = ({dataRepoz}) => {
             <ReduxForm
                 onSubmit={onSubmit}
             />
-            {isRequestSub && <ListItems data={dataRepoz} handleOnClick={handleOnClick}/>}
+            {isRequestSub && <ListItems data={dataRepoz}
+                                        handleOnClick={handleOnClick}
+            />}
             {mess && <div>по вашему запросу ничего не найдено: {mess}</div>}
+
         </div>
     )
 };

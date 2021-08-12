@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import classes from './listItem.module.css';
 import {NavLink} from "react-router-dom";
 
@@ -10,7 +10,16 @@ type propsType = {
 
 
 export const ListItems: React.FC<propsType> = ({data, handleOnClick}) => {
+    const [isFavorit, setFavorit] = useState(false);
 
+    const handleAddFavorit = (name: string, id: number) => {
+        localStorage.setItem(name, JSON.stringify(id));
+        setFavorit(true)
+    };
+    const handleRemoveFavorit = (name: string) => {
+        localStorage.removeItem(name);
+        setFavorit(false)
+    };
     return (
         <div className={classes.block}>
             {data.map((item: any, index: number) => {
@@ -20,7 +29,15 @@ export const ListItems: React.FC<propsType> = ({data, handleOnClick}) => {
                     <NavLink to={'/details'}>
                         <button className={classes.btn} onClick={() => handleOnClick(index)}>детальнее</button>
                     </NavLink>
-                    <button className={classes.btn}>добавить в избранное</button>
+                    {localStorage.getItem(item.name) ?
+                        <button onClick={() => handleRemoveFavorit(item.name)}
+                                style={{color: "blue", border: "1px solid blue"}} className={classes.btn}>удалить из
+                            избранное
+                        </button>
+                        : <button onClick={() => handleAddFavorit(item.name, item.id)}
+                                  className={classes.btn}
+                                  style={{color: "green", border: "1px solid green"}}>добавить в избранное </button>
+                    }
                 </div>
             })}
 
