@@ -66,6 +66,7 @@ const actions = {
 
 export const getRepo = (name: string): ThuncType => async (dispatch: any) => {
     let data = await getRepositopies.getData(name);
+
     if (data.message) {
         dispatch(actions.setMessage(data.message))
     } else {

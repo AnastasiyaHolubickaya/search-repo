@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
@@ -6,6 +6,7 @@ import classes from './homePage.module.css';
 import {Input} from "../../components/commons/FormControls/FormControls";
 import {getRepo, listType, setClickRepo} from "../../redux/reducer";
 import {ListItems} from "../../components/listItems/ListItems";
+import {byField} from "../../utils/sortByField";
 
 
 type ownPropsType = {}
@@ -52,28 +53,58 @@ const ReduxForm = reduxForm<formDataType, ownPropsType>({
 
 export const HomePage: React.FC<PropsType> = ({dataRepoz}) => {
 
-    const isRequestSub = useSelector((state: AppStateType) => state.app.isRequestSubmit);
-    const mess = useSelector((state: AppStateType) => state.app.message);
-    const dispatch = useDispatch();
+        const [data, setData] = useState(dataRepoz);
+        const [isByName, setIsByName] = useState(false);
+        const [isByRating, setIsByRating] = useState(false);
+        const [isByDate, setIsByDate] = useState(false);
+        const isRequestSub = useSelector((state: AppStateType) => state.app.isRequestSubmit);
+        const mess = useSelector((state: AppStateType) => state.app.message);
+        const dispatch = useDispatch();
 
-    const onSubmit = (formData: formDataType) => {
-        dispatch(getRepo(formData.name));
-    };
-    const handleOnClick = (id: number) => {
-        dispatch(setClickRepo(id));
-    };
+        const onSubmit = (formData: formDataType) => {
+            dispatch(getRepo(formData.name));
+        };
+        const handleOnClick = (id: number) => {
+            dispatch(setClickRepo(id));
+        };
 
-    return (
-        <div className={classes.container}>
-            <p>Поиск репозиториев на GitHub</p>
-            <ReduxForm
-                onSubmit={onSubmit}
-            />
-            {isRequestSub && <ListItems data={dataRepoz}
-                                        handleOnClick={handleOnClick}
-            />}
-            {mess && <div>по вашему запросу ничего не найдено: {mess}</div>}
+        useEffect(() => {
+            setData(dataRepoz);
+        }, [dataRepoz]);
 
-        </div>
-    )
-};
+        useEffect(() => {
+            if (isByName) {
+                setData(dataRepoz.sort(byField("name")));
+                setIsByName(false)
+            }
+            if (isByRating) {
+                setData(dataRepoz.sort(byField("stargazers_count")));
+                setIsByRating(false)
+            }
+            if (isByDate) {
+                setData(dataRepoz.sort(byField("created_at")));
+                setIsByDate(false)
+            }
+        }, [isByName, isByDate, isByRating]);
+
+        return (
+            <div className={classes.container}>
+                <p>Поиск репозиториев на GitHub</p>
+                <ReduxForm
+                    onSubmit={onSubmit}
+                />
+                <div>
+                    <p style={{fontSize: "14px"}}>Сортировать по</p>
+                    <button onClick={() => (setIsByName(true))}>имени</button>
+                    <button onClick={() => (setIsByDate(true))}>дате</button>
+                    <button onClick={() => (setIsByRating(true))}>рейтингу</button>
+                </div>
+                {isRequestSub && <ListItems data={data}
+                                            handleOnClick={handleOnClick}
+                />}
+                {mess && <div>по вашему запросу ничего не найдено: {mess}</div>}
+
+            </div>
+        )
+    }
+;

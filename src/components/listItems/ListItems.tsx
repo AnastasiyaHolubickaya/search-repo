@@ -20,6 +20,7 @@ export const ListItems: React.FC<propsType> = ({data, handleOnClick}) => {
         localStorage.removeItem(name);
         setFavorit(false)
     };
+
     return (
         <div className={classes.block}>
             {data.map((item: any, index: number) => {
@@ -42,5 +43,6 @@ export const ListItems: React.FC<propsType> = ({data, handleOnClick}) => {
             })}
 
         </div>
+
     )
 };
