@@ -1,5 +1,5 @@
 class ServerRequest {
-    private baseURL = "https://api.github.com/users/";
+    private baseURL = "https://api.github.com/search/repositories";
     private static instance: ServerRequest;
 
     private constructor() {
@@ -13,8 +13,8 @@ class ServerRequest {
         return ServerRequest.instance;
     }
 
-    getData(url: string) {
-        return fetch(`${this.baseURL}${url}/repos`)
+    getData(url: string, currentPage: number, perPage: number) {
+        return fetch(`${this.baseURL}?q=${url}&per_page=${perPage}&page=${currentPage}`)
             .then(data => data.json())
     }
 }

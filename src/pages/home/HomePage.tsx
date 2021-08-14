@@ -4,9 +4,10 @@ import {AppStateType} from "../../redux/store";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import classes from './homePage.module.css';
 import {Input} from "../../components/commons/FormControls/FormControls";
-import {getRepo, listType, setClickRepo} from "../../redux/reducer";
+import {actions, getRepos, listType, setClickRepo} from "../../redux/reducer";
 import {ListItems} from "../../components/listItems/ListItems";
 import {byField} from "../../utils/sortByField";
+import Pagination from "../../components/pagination/Pagination";
 
 
 type ownPropsType = {}
@@ -22,21 +23,13 @@ const requiredField: validatorType = (value) => {
     if (value) return undefined;
     return "введите данные для поиска";
 };
-const validateSumbol: validatorType = (value) => {
-    if (value !== undefined) {
-        let regex = new RegExp(/^[a-z]+$/i);
-        if (!regex.test(value)) return (`разрешен ввод только букв латинского алфавита`);
-    }
-    return undefined;
-};
-
 
 const SearchForm: React.FC<InjectedFormProps<formDataType> & ownPropsType> = ({handleSubmit, error}) => {
     return (
         <form className={classes.loginForm} onSubmit={handleSubmit}>
             <div className={classes.loginFormInput}><Field name={'name'}
                                                            component={Input}
-                                                           validate={[requiredField, validateSumbol]}/></div>
+                                                           validate={[requiredField]}/></div>
             {
                 error && <div className={classes.formSummaryError}> {error}</div>
             }
@@ -53,20 +46,35 @@ const ReduxForm = reduxForm<formDataType, ownPropsType>({
 
 export const HomePage: React.FC<PropsType> = ({dataRepoz}) => {
 
+        const searchValue = useSelector((state: AppStateType) => state.app.searchValue);
+        const currentPage = useSelector((state: AppStateType) => state.app.currentPage);
+        const totalCount = useSelector((state: AppStateType) => state.app.totalCount);
+        const perPage = useSelector((state: AppStateType) => state.app.perPage);
+        const isRequestSub = useSelector((state: AppStateType) => state.app.isRequestSubmit);
+        const mess = useSelector((state: AppStateType) => state.app.message);
+
         const [data, setData] = useState(dataRepoz);
         const [isByName, setIsByName] = useState(false);
         const [isByRating, setIsByRating] = useState(false);
         const [isByDate, setIsByDate] = useState(false);
-        const isRequestSub = useSelector((state: AppStateType) => state.app.isRequestSubmit);
-        const mess = useSelector((state: AppStateType) => state.app.message);
+
         const dispatch = useDispatch();
 
         const onSubmit = (formData: formDataType) => {
-            dispatch(getRepo(formData.name));
+            dispatch(actions.setSearchValue(formData.name));
+            dispatch(actions.setCurrentPage(1));
+            dispatch(getRepos(formData.name, currentPage, perPage));
         };
         const handleOnClick = (id: number) => {
             dispatch(setClickRepo(id));
         };
+        const onPageChange = (page: number) => {
+            dispatch(actions.setCurrentPage(page))
+        };
+        useEffect(() => {
+            if (searchValue !== '' || currentPage >= 1)
+                dispatch(getRepos(searchValue, currentPage, perPage));
+        }, [currentPage, searchValue]);
 
         useEffect(() => {
             setData(dataRepoz);
@@ -103,7 +111,12 @@ export const HomePage: React.FC<PropsType> = ({dataRepoz}) => {
                                             handleOnClick={handleOnClick}
                 />}
                 {mess && <div>по вашему запросу ничего не найдено: {mess}</div>}
-
+                <Pagination
+                    totalCount={totalCount}
+                    currentPage={currentPage}
+                    perPage={perPage}
+                    onPageChange={onPageChange}
+                />
             </div>
         )
     }

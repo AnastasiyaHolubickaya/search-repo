@@ -1,0 +1,30 @@
+.currentPage {
+    font-weight: 900;
+    background-color: #037103;
+    color: white;
+}
+
+.block {
+    font-weight: bold;
+    width: 100%;
+}
+
+.block button {
+    color: green;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    transition: all 0.5s ease 0s;
+}
+
+.block button:hover {
+    border: none;
+    outline: none;
+    border-radius: 2px;
+}
+
+.block span {
+    display: inline-block;
+    cursor: pointer;
+    padding: 1px;
+}

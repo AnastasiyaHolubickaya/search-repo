@@ -25,6 +25,10 @@ let initialState = {
     firstTimeFlaf: false,
     repoId: null as null | number,
     message: null as null | string,
+    currentPage: 0,
+    perPage: 10,
+    totalCount: 0,
+    searchValue: "",
 };
 export type initialStateType = typeof initialState;
 
@@ -52,25 +56,42 @@ const reducer = (state = initialState, action: ActionsType): initialStateType =>
                 ...state,
                 message: action.mess,
             };
+        case "SET_CURRENT_PAGE":
+            return {
+                ...state,
+                currentPage: action.currentPage
+            };
+        case "SET_SEARCH_VALUE":
+            return {
+                ...state,
+                searchValue: action.value
+            };
+        case "SET_TOTAL_COUNT":
+            return {
+                ...state,
+                totalCount: action.totalCount
+            };
         default:
             return state;
     }
 };
-const actions = {
+export const actions = {
     setRepo: (data: any) => ({type: "SET_REPO", data} as const),
     setFirstTimeFlaf: (flag: boolean) => ({type: "SET_FIRST_TIME_FLAG", flag} as const),
     setId: (id: number) => ({type: "SET_CLICK_ID", id} as const),
     setMessage: (mess: string) => ({type: "SET_MESSAGE", mess} as const),
-
+    setCurrentPage: (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const),
+    setSearchValue: (value: string) => ({type: "SET_SEARCH_VALUE", value} as const),
+    setTotalCount: (totalCount: number) => ({type: "SET_TOTAL_COUNT", totalCount} as const),
 };
 
-export const getRepo = (name: string): ThuncType => async (dispatch: any) => {
-    let data = await getRepositopies.getData(name);
-
+export const getRepos = (searchValue: string, currentPage: number, perPage: number): ThuncType => async (dispatch: any) => {
+    let data = await getRepositopies.getData(searchValue, currentPage, perPage);
     if (data.message) {
         dispatch(actions.setMessage(data.message))
     } else {
-        dispatch(actions.setRepo(data))
+        dispatch(actions.setTotalCount(data.total_count));
+        dispatch(actions.setRepo(data.items))
     }
 };
 export const setFlagApp = (flag: boolean) => (dispatch: any) => {
