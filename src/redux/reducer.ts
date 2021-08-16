@@ -22,8 +22,8 @@ export type listType = {
 let initialState = {
     isRequestSubmit: false,
     massRepos: [] as Array<listType>,
-    firstTimeFlaf: false,
-    repoId: null as null | number,
+    isFirstTimeLoadApp: false,
+    idSelectedRepo: null as null | number,
     message: null as null | string,
     currentPage: 0,
     perPage: 10,
@@ -44,12 +44,12 @@ const reducer = (state = initialState, action: ActionsType): initialStateType =>
         case "SET_FIRST_TIME_FLAG":
             return {
                 ...state,
-                firstTimeFlaf: action.flag,
+                isFirstTimeLoadApp: action.flag,
             };
         case "SET_CLICK_ID":
             return {
                 ...state,
-                repoId: action.id,
+                idSelectedRepo: action.id,
             };
         case "SET_MESSAGE":
             return {
@@ -77,7 +77,7 @@ const reducer = (state = initialState, action: ActionsType): initialStateType =>
 };
 export const actions = {
     setRepo: (data: any) => ({type: "SET_REPO", data} as const),
-    setFirstTimeFlaf: (flag: boolean) => ({type: "SET_FIRST_TIME_FLAG", flag} as const),
+    setIsFirstTimeLoadApp: (flag: boolean) => ({type: "SET_FIRST_TIME_FLAG", flag} as const),
     setId: (id: number) => ({type: "SET_CLICK_ID", id} as const),
     setMessage: (mess: string) => ({type: "SET_MESSAGE", mess} as const),
     setCurrentPage: (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const),
@@ -94,8 +94,8 @@ export const getRepos = (searchValue: string, currentPage: number, perPage: numb
         dispatch(actions.setRepo(data.items))
     }
 };
-export const setFlagApp = (flag: boolean) => (dispatch: any) => {
-    dispatch(actions.setFirstTimeFlaf(flag))
+export const setFlagFirstTimeLoadApp = (flag: boolean) => (dispatch: any) => {
+    dispatch(actions.setIsFirstTimeLoadApp(flag))
 };
 export const setClickRepo = (id: number) => (dispatch: any) => {
     dispatch(actions.setId(id))

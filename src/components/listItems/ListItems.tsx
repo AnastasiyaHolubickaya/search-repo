@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import classes from './listItem.module.css';
 import {NavLink} from "react-router-dom";
+
 
 
 type propsType = {
@@ -12,13 +13,22 @@ type propsType = {
 export const ListItems: React.FC<propsType> = ({data, handleOnClick}) => {
     const [isFavorit, setFavorit] = useState(false);
 
+
     const handleAddFavorit = (name: string, id: number) => {
+       if(isFavorit){
+           setFavorit(false)
+       }else {
+           setFavorit(true)
+       }
         localStorage.setItem(name, JSON.stringify(id));
-        setFavorit(true)
     };
     const handleRemoveFavorit = (name: string) => {
+        if(isFavorit){
+            setFavorit(false)
+        }else {
+            setFavorit(true)
+        }
         localStorage.removeItem(name);
-        setFavorit(false)
     };
 
     return (
