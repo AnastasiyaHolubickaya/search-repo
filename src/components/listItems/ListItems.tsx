@@ -34,20 +34,24 @@ export const ListItems: React.FC<propsType> = ({data, handleOnClick}) => {
     return (
         <div className={classes.block}>
             {data.map((item: any, index: number) => {
-                return <div key={item.id.toString()} className={classes.block_item}>
-                    <p>Имя репозитория: <b>{item.name}</b></p>
-                    <p>Рейтинг: {item.stargazers_count}</p>
+                return <div key={item.id.toString()} className="card-panel white">
+                    <p className="black-text">Name REPO: <b className="teal-text">{item.name}</b></p>
+                    <p className="black-text">Rating: {item.stargazers_count}</p>
                     <NavLink to={'/details'}>
-                        <button className={classes.btn} onClick={() => handleOnClick(index)}>детальнее</button>
+                        <button
+                            className="waves-effect waves-light white teal-text  btn-small"
+                            onClick={() => handleOnClick(index)}
+                            style={{marginRight:"20px"}}> detail
+                        </button>
+
                     </NavLink>
                     {localStorage.getItem(item.name) ?
                         <button onClick={() => handleRemoveFavorit(item.name)}
-                                style={{color: "blue", border: "1px solid blue"}} className={classes.btn}>удалить из
-                            избранное
+                                className="waves-effect waves-light lime lighten-2 teal-text  btn-small">remove to favorit
                         </button>
                         : <button onClick={() => handleAddFavorit(item.name, item.id)}
-                                  className={classes.btn}
-                                  style={{color: "green", border: "1px solid green"}}>добавить в избранное </button>
+                                  className="waves-effect waves-light white teal-text lighten-2 btn-small"
+                                  >add to favorit </button>
                     }
                 </div>
             })}

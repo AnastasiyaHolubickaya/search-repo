@@ -1,18 +1,6 @@
 .block {
     width: 100%;
     display: flex;
-    padding: 50px;
-}
-
-.block_photo {
-    width: 100px;
-    margin-right: 50px;
-    border: 1px solid black;
-    padding: 5px;
-}
-
-.block_photo img {
-    width: 100%;
 }
 
 .block_info {

@@ -23,18 +23,24 @@ const requiredField: validatorType = (value) => {
     if (value) return undefined;
     return "введите данные для поиска";
 };
-
+/*const validateSumbol: validatorType = (value) => {
+    if (value !== undefined) {
+        let regex = new RegExp(/^[a-zA-Z0-9]+$/i);
+        if (!regex.test(value)) return (`разрешен ввод только букв латинского алфавита`);
+    }
+    return undefined;
+};*/
 const SearchForm: React.FC<InjectedFormProps<formDataType> & ownPropsType> = ({handleSubmit, error}) => {
     return (
         <form className={classes.loginForm} onSubmit={handleSubmit}>
-            <div className={classes.loginFormInput}><Field name={'name'}
+            <div className="input-field name-input"><Field name={'name'}
                                                            component={Input}
                                                            validate={[requiredField]}/></div>
             {
                 error && <div className={classes.formSummaryError}> {error}</div>
             }
             <div className={classes.loginFormButton}>
-                <button className={classes.btnSubmit}> Поиск</button>
+                <button className="btn waves-effect waves-light">Submit<i className="material-icons right"> </i></button>
             </div>
         </form>
     )
@@ -97,15 +103,18 @@ export const HomePage: React.FC<PropsType> = ({dataRepoz}) => {
 
         return (
             <div className={classes.container}>
-                <p>Поиск репозиториев на GitHub</p>
+                <div >
+                    <p className="card-panel teal lighten-2 white-text ">Search repos in  GitHub</p>
+                </div>
+
                 <ReduxForm
                     onSubmit={onSubmit}
                 />
-                <div>
-                    <p style={{fontSize: "14px"}}>Сортировать по</p>
-                    <button onClick={() => (setIsByName(true))}>имени</button>
-                    <button onClick={() => (setIsByDate(true))}>дате</button>
-                    <button onClick={() => (setIsByRating(true))}>рейтингу</button>
+                <div className={classes.btn_group}>
+                    <p className="black-text " style={{fontSize: "14px"}}>SORT to:</p>
+                    <button className="waves-effect waves-light white teal-text btn-small" onClick={() => (setIsByName(true))}>name</button>
+                    <button className="waves-effect waves-light white teal-text btn-small" onClick={() => (setIsByDate(true))}>date</button>
+                    <button className="waves-effect waves-light white teal-text btn-small" onClick={() => (setIsByRating(true))}>rating</button>
                 </div>
                 {isRequestSub && <ListItems data={data}
                                             handleOnClick={handleOnClick}

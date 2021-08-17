@@ -27,16 +27,16 @@ const Pagination: React.FC<propsType> = ({currentPage, perPage, totalCount, onPa
 
     return (
 
-        <div className={classes.block}>
+        <div className="pagination">
             {portionNumber > 1 &&
-            <button onClick={() => {
+            <span style={{cursor:"pointer"}} onClick={() => {
                 setPortionNumber(portionNumber - 1)
-            }}> &#9668; </button>
+            }}><i className="material-icons">chevron_left</i> </span>
             }
             {pages
                 .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(p => {
-                    return <span className={cn(currentPage === p && classes.currentPage)}
+                    return <span style={{cursor:"pointer"}} className={cn(currentPage === p && classes.currentPage)}
                                  key={p}
                                  onClick={(e) => {
                                      onPageChange(p)
@@ -44,9 +44,9 @@ const Pagination: React.FC<propsType> = ({currentPage, perPage, totalCount, onPa
                 })
             }
             {portionCount > portionNumber &&
-            <button onClick={() => {
+            <span style={{cursor:"pointer"}} onClick={() => {
                 setPortionNumber(portionNumber + 1)
-            }}> &#9658; </button>
+            }}><i className="material-icons">chevron_right</i> </span>
             }
         </div>
     )
