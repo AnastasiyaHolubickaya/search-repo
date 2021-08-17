@@ -1,20 +1,23 @@
 {
   "files": {
-    "main.css": "/search-repo/static/css/main.c1fab543.chunk.css",
-    "main.js": "/search-repo/static/js/main.0bfaa7da.chunk.js",
-    "main.js.map": "/search-repo/static/js/main.0bfaa7da.chunk.js.map",
+    "main.css": "/search-repo/static/css/main.70e8b8e2.chunk.css",
+    "main.js": "/search-repo/static/js/main.2a672dfa.chunk.js",
+    "main.js.map": "/search-repo/static/js/main.2a672dfa.chunk.js.map",
     "runtime-main.js": "/search-repo/static/js/runtime-main.c80da3ac.js",
     "runtime-main.js.map": "/search-repo/static/js/runtime-main.c80da3ac.js.map",
-    "static/js/2.b185ddc9.chunk.js": "/search-repo/static/js/2.b185ddc9.chunk.js",
-    "static/js/2.b185ddc9.chunk.js.map": "/search-repo/static/js/2.b185ddc9.chunk.js.map",
+    "static/css/2.e43d3303.chunk.css": "/search-repo/static/css/2.e43d3303.chunk.css",
+    "static/js/2.a58ce302.chunk.js": "/search-repo/static/js/2.a58ce302.chunk.js",
+    "static/js/2.a58ce302.chunk.js.map": "/search-repo/static/js/2.a58ce302.chunk.js.map",
     "index.html": "/search-repo/index.html",
-    "static/css/main.c1fab543.chunk.css.map": "/search-repo/static/css/main.c1fab543.chunk.css.map",
-    "static/js/2.b185ddc9.chunk.js.LICENSE.txt": "/search-repo/static/js/2.b185ddc9.chunk.js.LICENSE.txt"
+    "static/css/2.e43d3303.chunk.css.map": "/search-repo/static/css/2.e43d3303.chunk.css.map",
+    "static/css/main.70e8b8e2.chunk.css.map": "/search-repo/static/css/main.70e8b8e2.chunk.css.map",
+    "static/js/2.a58ce302.chunk.js.LICENSE.txt": "/search-repo/static/js/2.a58ce302.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c80da3ac.js",
-    "static/js/2.b185ddc9.chunk.js",
-    "static/css/main.c1fab543.chunk.css",
-    "static/js/main.0bfaa7da.chunk.js"
+    "static/css/2.e43d3303.chunk.css",
+    "static/js/2.a58ce302.chunk.js",
+    "static/css/main.70e8b8e2.chunk.css",
+    "static/js/main.2a672dfa.chunk.js"
   ]
 }
